@@ -21,11 +21,13 @@ namespace LongitudeOne\Spatial\DBAL\Types;
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Platforms\MySQLPlatform;
 use Doctrine\DBAL\Platforms\PostgreSQLPlatform;
+use Doctrine\DBAL\Platforms\SQLServerPlatform;
 use Doctrine\DBAL\Types\Exception\TypeNotRegistered;
 use Doctrine\DBAL\Types\Type;
 use LongitudeOne\Spatial\DBAL\Platform\MySql;
 use LongitudeOne\Spatial\DBAL\Platform\PlatformInterface;
 use LongitudeOne\Spatial\DBAL\Platform\PostgreSql;
+use LongitudeOne\Spatial\DBAL\Platform\SqlServer;
 use LongitudeOne\Spatial\Exception\InvalidValueException;
 use LongitudeOne\Spatial\Exception\UnsupportedPlatformException;
 use LongitudeOne\Spatial\PHP\Types\SpatialInterface;
@@ -240,6 +242,10 @@ abstract class AbstractSpatialType extends Type implements DoctrineSpatialTypeIn
 
         if ($platform instanceof PostgreSQLPlatform) {
             return new PostgreSql();
+        }
+
+        if($platform instanceof SqlServerPlatform) {
+            return new SqlServer();
         }
 
         throw new UnsupportedPlatformException(sprintf(
